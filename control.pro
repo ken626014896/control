@@ -14,7 +14,10 @@ DEFINES += SY_APP_TYPE="\\\"control\\\""
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        data_info.cpp \
+        data_model.cpp \
+        main.cpp \
+        manager.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,7 +31,7 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
+UI_DIR=./UI
 
 msvc:QMAKE_CXXFLAGS += -source-charset:utf-8
 
@@ -40,3 +43,8 @@ include($$PWD/sy_logger/sy_logger.pri)
 include($$PWD/sy_utils/sy_utils.pri)
 include($$PWD/sy_global/sy_global.pri)
 include($$PWD/sy_minidump/sy_minidump.pri)
+
+HEADERS += \
+    data_info.h \
+    data_model.h \
+    manager.h

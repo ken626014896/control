@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>WaterPage.qml</file>
+        <file>VideoPage.qml</file>
+        <file>UserPage.qml</file>
+        <file>font/fontawesome-webfont.ttf</file>
     </qresource>
 </RCC>
