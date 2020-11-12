@@ -1,4 +1,4 @@
-#ifndef DATA_MODEL_H
+﻿#ifndef DATA_MODEL_H
 #define DATA_MODEL_H
 
 #include <QObject>
@@ -32,6 +32,7 @@ public:
 
     Q_INVOKABLE int get_current_index();
     Q_INVOKABLE void set_current_index(int val);
+    QList<QSharedPointer<data_info>> get_data_list();
 signals:
     void index_changed();
 

@@ -17,18 +17,23 @@ public:
     QString get_id();
     void set_id(QString val);
 
-
+//    QString 
     virtual void start();
     virtual void stop();
+    QString getIp_address() const;
+    void setIp_address(const QString &ip_address);
+    
 signals:
-
+    
 public slots:
-
-
+    
+    
 protected:
     QString m_name;
     QString m_id;
     int m_index;//设备索引
+    
+    QString m_ip_address;
 };
 
 #endif // DATA_INFO_H

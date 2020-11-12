@@ -16,6 +16,9 @@ DEFINES += SY_APP_TYPE="\\\"control\\\""
 SOURCES += \
         data_info.cpp \
         data_model.cpp \
+        http_info.cpp \
+        http_thread.cpp \
+        http_worker.cpp \
         main.cpp \
         manager.cpp
 
@@ -47,4 +50,7 @@ include($$PWD/sy_minidump/sy_minidump.pri)
 HEADERS += \
     data_info.h \
     data_model.h \
+    http_info.h \
+    http_thread.h \
+    http_worker.h \
     manager.h

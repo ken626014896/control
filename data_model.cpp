@@ -1,4 +1,4 @@
-#include "data_model.h"
+﻿#include "data_model.h"
 #include <QtDebug>
 #include <QCoreApplication>
 #include <QDir>
@@ -123,4 +123,8 @@ QHash<int, QByteArray> data_model::roleNames() const
     roles[NameRole] = "dmName";
 
     return roles;
+}
+QList<QSharedPointer<data_info> > data_model::get_data_list()
+{
+    return m_list_data;
 }
