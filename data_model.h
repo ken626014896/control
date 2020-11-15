@@ -13,6 +13,8 @@ public:
     explicit data_model(QObject *parent = nullptr);
     enum DataRoles{
         NameRole = Qt::UserRole + 1,
+        UrlRole,
+        CamerNameRole
 
     };
     Q_PROPERTY(int current_index READ get_current_index WRITE set_current_index NOTIFY index_changed)
@@ -33,6 +35,8 @@ public:
     Q_INVOKABLE int get_current_index();
     Q_INVOKABLE void set_current_index(int val);
     QList<QSharedPointer<data_info>> get_data_list();
+    QSharedPointer<data_info> get_data_by_index(int index);
+    QSharedPointer<data_info> get_data_by_id(QString id);
 signals:
     void index_changed();
 

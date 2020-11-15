@@ -1,6 +1,6 @@
 QT += quick qml network
 CONFIG += c++11
-
+QT += multimedia
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Refer to the documentation for the
@@ -14,6 +14,9 @@ DEFINES += SY_APP_TYPE="\\\"control\\\""
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        camera_info.cpp \
+        camera_thread.cpp \
+        camera_worker.cpp \
         data_info.cpp \
         data_model.cpp \
         http_info.cpp \
@@ -48,6 +51,9 @@ include($$PWD/sy_global/sy_global.pri)
 include($$PWD/sy_minidump/sy_minidump.pri)
 
 HEADERS += \
+    camera_info.h \
+    camera_thread.h \
+    camera_worker.h \
     data_info.h \
     data_model.h \
     http_info.h \

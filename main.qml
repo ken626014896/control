@@ -1,4 +1,4 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 import QtQuick.Window 2.12
 
 import QtQuick.Controls 2.5 as QC2_5
@@ -57,17 +57,17 @@ Window {
                     anchors.bottom: bottom_rect.top
                     width: parent.width
                     WaterPage {
-
+                        id:waterpage
                         width:parent.width
                         height:parent.height
                     }
                     VideoPage {
-
+                        id:videopage
                         width:parent.width
                         height:parent.height
                     }
                     UserPage {
-
+                        id:userpage
                         width:parent.width
                         height:parent.height
                     }
@@ -97,9 +97,13 @@ Window {
                                     MouseArea{
                                       anchors.fill: parent
                                       onClicked: {
-                                            layout.currentIndex=index
+                                          layout.currentIndex=index
                                           title_text.text=title
 
+
+                                          if(layout.currentIndex==1)
+                                                videopage.objModel_a.clear()
+                                                videopage.objModel_a.append($manager.get_group_childs())
                                       }
                                     }
                                 }
@@ -230,8 +234,22 @@ Window {
                      }
                 }
 
+
+
+
              }
+
+
+             Text {
+                 anchors.centerIn: parent
+                 text: qsTr("text")
+             }
+
          }
+
+
+
+
      }
 
 

@@ -12,10 +12,13 @@ class manager : public QObject
 public:
     explicit manager(data_model *test,QObject *parent = nullptr);
     void test_data();//测试添加数据
+
+    Q_INVOKABLE QVariantList get_group_childs();
+
 signals:
 
 public slots:
-
+    void camera_get_finish_slot(QString id);
 
 private:
     data_model *m_model_test;
@@ -23,6 +26,7 @@ private:
     void stop_by_switch(QSharedPointer<data_info> val);
     void start_by_switch(QList<QSharedPointer<data_info> > list);
     void start_by_switch(QSharedPointer<data_info>  val);
+    QSharedPointer<data_info>  http_obj;
 
 };
 

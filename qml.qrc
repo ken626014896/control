@@ -5,5 +5,6 @@
         <file>VideoPage.qml</file>
         <file>UserPage.qml</file>
         <file>font/fontawesome-webfont.ttf</file>
+        <file>Video_item_win.qml</file>
     </qresource>
 </RCC>

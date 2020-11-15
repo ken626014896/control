@@ -30,6 +30,12 @@ QVariant data_model::data(const QModelIndex &index, int role) const
     case NameRole:
         rv =data->get_name();
         break;
+    case UrlRole:
+        rv =data->getUrl();
+        break;
+    case CamerNameRole:
+        rv =data->getCameraname();
+        break;
 
     default:
         rv = QVariant();
@@ -121,10 +127,29 @@ QHash<int, QByteArray> data_model::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "dmName";
+    roles[UrlRole] = "dmUrl";
+    roles[CamerNameRole] = "dmCamerName";
 
     return roles;
 }
 QList<QSharedPointer<data_info> > data_model::get_data_list()
 {
     return m_list_data;
+}
+
+QSharedPointer<data_info> data_model::get_data_by_index(int index)
+{
+    return  m_list_data.at(index);
+}
+
+QSharedPointer<data_info> data_model::get_data_by_id(QString id)
+{
+    for (int i=0; i < m_list_data.count(); i++) {
+        QSharedPointer<data_info> info = m_list_data.at(i);
+        if(info.isNull() || info->get_id() != id){
+            continue;
+        }
+        return info;
+    }
+    return QSharedPointer<data_info>();
 }
