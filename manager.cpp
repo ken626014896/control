@@ -28,7 +28,7 @@ void manager::test_data()
 QVariantList manager::get_group_childs()
 {
     QSharedPointer<data_info> dev=m_model_test->get_data_by_index(0);
-    qDebug()<<dev<<dev->getList_camera().length()<<dev->getList_catalogue().length();
+//    qDebug()<<dev<<dev->getList_camera().length()<<dev->getList_catalogue().length();
     QVariantList list = dev->get_group_childs();//信号分组列表
 
     foreach (QVariant v, list) {

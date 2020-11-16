@@ -33,37 +33,58 @@ void http_worker::stop()
 
 void http_worker::get_camera_tree()
 {
-    QUrl newUrl = QUrl::fromUserInput("http://192.168.0.1:8000/aic/restful/getdata");//请求地址
+    QUrl newUrl = QUrl::fromUserInput("http://192.168.200.62:8000/aic/restful/getdata");//请求地址
     QNetworkRequest request;
-
+    QByteArray text("admin:admin");
     request.setUrl(newUrl);
-
+    request.setRawHeader("Authorization","Basic YWRtaW46YWRtaW4=");//Authorization身份验证
     request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
 
 
-    QByteArray dataArray = "{\"authorJson\":\"admin\",\"parmJson\":{\"code\":\"HuoQuTongDaoMuLuShuKeHuDuan\",\"params\":{}}}" ;
+    QByteArray dataArray = "{\"authorJson\":{\"loginAccount\":\"admin\"},\"parmJson\":{\"code\":\"HuoQuTongDaoMuLuShuKeHuDuan\",\"params\":{}}}" ;
 
+    QByteArray post_data;
+    QByteArray post_data1("{\"loginAccount\":\"admin\"}");
+    QByteArray post_data2("{\"code\":\"HuoQuTongDaoMuLuShuKeHuDuan\",\"params\":{}}");
+    post_data.append("authorJson=");
+    post_data.append(post_data1);
+    post_data.append("&");
+    post_data.append("parmJson=");
+    post_data.append(post_data2);
 
     action_hint=0;
-    reply = networkManager.post(request,dataArray);
+    reply = networkManager.post(request,post_data);
     connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
 }
 
 void http_worker::get_camera_list()
 {
-    QUrl newUrl = QUrl::fromUserInput("http://192.168.0.1:8000/aic/restful/getdata");//请求地址
+    QUrl newUrl = QUrl::fromUserInput("http://192.168.200.62:8000/aic/restful/getdata");//请求地址
     QNetworkRequest request;
 
+    QByteArray text("admin:admin");
     request.setUrl(newUrl);
+    request.setRawHeader("Authorization","Basic YWRtaW46YWRtaW4=");//Authorization身份验证
 
     request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
 
 
-    QByteArray dataArray = "{\"authorJson\":\"admin\",\"parmJson\":{\"code\":\"HuoQuSuoYouSheXiangJiLieBiaoKeHuDuan\",\"params\":{}}}" ;
+    QByteArray dataArray = "{\"authorJson\":{\"loginAccount\":\"admin\"},\"parmJson\":{\"code\":\"HuoQuSuoYouSheXiangJiLieBiaoKeHuDuan\",\"params\":{}}}" ;
 
+
+
+    QByteArray post_data;
+    QByteArray post_data1("{\"loginAccount\":\"admin\"}");
+    QByteArray post_data2("{\"code\":\"HuoQuSuoYouSheXiangJiLieBiaoKeHuDuan\",\"params\":{}}");
+    post_data.append("authorJson=");
+    post_data.append(post_data1);
+    post_data.append("&");
+    post_data.append("parmJson=");
+    post_data.append(post_data2);
 
     action_hint=1;
-    reply = networkManager.post(request,dataArray);
+    reply = networkManager.post(request,post_data);
+    connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
 }
 
 void http_worker::get_reply()
@@ -88,8 +109,11 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
 
         if(!(jsonDoucment.isNull()||jsonDoucment.isEmpty())){
 
-            QVariantList catalogue_list=jsonDoucment.toVariant().toList();
+            QVariantList all_catalogue_list=jsonDoucment.toVariant().toList();
+            QVariantMap  catalogue_list_map=all_catalogue_list.at(0).toMap();
 
+            QVariantList  catalogue_list=catalogue_list_map["datas"].toList();
+            qDebugxx("get catalogue num: ",catalogue_list.length());
             for (int i=0;i<catalogue_list.length();i++) {
 
                 QVariantMap map=catalogue_list.at(i).toMap();
@@ -116,14 +140,19 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
 
 void http_worker::hanlder_camera_list(QByteArray bytes)
 {
+
+    qDebugx("get camera  ");
     QJsonParseError jsonError;
     QJsonDocument jsonDoucment = QJsonDocument::fromJson(bytes, &jsonError);
     if(jsonError.error == QJsonParseError::NoError){
 
         if(!(jsonDoucment.isNull()||jsonDoucment.isEmpty())){
 
-            QVariantList camera_list=jsonDoucment.toVariant().toList();
+            QVariantList all_camera_list=jsonDoucment.toVariant().toList();
+            QVariantMap  camera_list_map=all_camera_list.at(0).toMap();
 
+            QVariantList  camera_list=camera_list_map["datas"].toList();
+            qDebugxx("get camera num: ",camera_list.length());
             for (int i=0;i<camera_list.length();i++) {
 
                 QVariantMap map=camera_list.at(i).toMap();

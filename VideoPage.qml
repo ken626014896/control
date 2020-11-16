@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 
 import QtQuick.Layouts 1.12
+import QtMultimedia 5.12
 Rectangle{
 
    color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
@@ -136,9 +137,8 @@ Rectangle{
                                if(dmType==0){
                                    console.log("camera id :",dmId)
                                    itemDisplay.visible=true
-                                   itemDisplay.source="Video_item_win.qml"
-
-                                   itemDisplay.item.playerSource=dmUrl
+                                   itemDisplay.source="qrc:/Video_item_win.qml"
+                                     itemDisplay.item.playerSource=dmUrl
                                }
 
                                var v = false;
@@ -171,7 +171,12 @@ Rectangle{
        }
    }
 
+//   Video_item_win{
+//       id: itemDisplay
+//       anchors.fill: parent
+//       visible: false
 
+//   }
 
 
    Loader {

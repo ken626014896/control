@@ -28,35 +28,54 @@ void camera_worker::stop()
 
 void camera_worker::get_camera_url()
 {
-    QUrl newUrl = QUrl::fromUserInput("http://192.168.0.1:8000/aic/restful/getdata");//请求地址
+    QUrl newUrl = QUrl::fromUserInput("http://192.168.200.62:8000/aic/restful/getdata");//请求地址
     QNetworkRequest request;
+    QByteArray text("admin:admin");
 
     request.setUrl(newUrl);
-
+    request.setRawHeader("Authorization","Basic YWRtaW46YWRtaW4=");//Authorization身份验证
     request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
 
 
-    QByteArray dataArray = "{\"authorJson\":\"admin\",\"parmJson\":{\"code\":\"getRealUri\",\"params\":{\"cameraid\":\"f9d5e03e4a0a4597b106e9e4995ed7bf\"}}}" ;
+    QByteArray dataArray = "{\"authorJson\":{\"loginAccount\":\"admin\"},\"parmJson\":{\"code\":\"getRealUri\",\"params\":{\"cameraid\":\"f9d5e03e4a0a4597b106e9e4995ed7bf\"}}}" ;
     //发送json
+    QByteArray post_data;
+    QByteArray post_data1("{\"loginAccount\":\"admin\"}");
+    QString temp="{\"code\":\"getRealUri\",\"params\":{\"cameraid\":"+m_data_info->getCameraid()+"}}";
+    QByteArray post_data2;
+
+
+    QString  str=m_data_info->getCameraid();
+    char*  ch;
+    QByteArray ba = str.toLatin1(); // must
+    ch=ba.data();
+    QByteArray post_data3="{\"code\":\"getRealUri\",\"params\":{\"cameraid\":\"";
+    post_data3.append(ch);
+    post_data3.append("\"}}");
     QJsonObject json;
-    QByteArray dataArray2 ;
-    json.insert("authorJson", "admin");
+
+    json.insert("code", "getRealUri");
 
     QJsonObject parmjson;
 
     QJsonObject parmsjson;
     parmsjson.insert("cameraid",m_data_info->getCameraid());
 
-    parmjson.insert("params",parmsjson);
-    parmjson.insert("code","getRealUri");
-    json.insert("parmJson", parmjson);
+
+    json.insert("params", parmjson);
     QJsonDocument document;
     document.setObject(json);
-    dataArray2 = document.toJson(QJsonDocument::Compact);
+    post_data2 = document.toJson(QJsonDocument::Compact);
+
+    post_data.append("authorJson=");
+    post_data.append(post_data1);
+    post_data.append("&");
+    post_data.append("parmJson=");
+    post_data.append(post_data3);
 
 
 
-    reply = networkManager.post(request,dataArray2);
+    reply = networkManager.post(request,post_data);
     connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
 }
 
