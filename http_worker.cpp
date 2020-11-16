@@ -17,11 +17,13 @@ void http_worker::start()
 {
 
 
-    QString temp="[{\"id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"name\": \"dasha\", \"parent_id\": \"18a62514-96ba-11e7-bee6-00163e080cc6\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee6-00163e080cc6,\", \"sort\": 30},{ \"id\": \"18a62514-96ba-11e7-bee6-00163e080cc6\", \"name\": \"guangzhoushi\", \"parent_id\": \"0\", \"parent_ids\": \"0,\", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"608\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"609\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30},{\"id\": \"10ff533ed2c74c1caf7bab39b20c1c902\", \"name\": \"dasha2\", \"parent_id\": \"18a62514-96ba-11e7-bee6-00163e080cc62\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee6-00163e080cc6,\", \"sort\": 30},{ \"id\": \"18a62514-96ba-11e7-bee6-00163e080cc62\", \"name\": \"guangzhoushi2\", \"parent_id\": \"0\", \"parent_ids\": \"0,\", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"6082\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c902\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30}]";
-    hanlder_camera_tree(temp.toUtf8());
+//    QString temp="[{\"id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"name\": \"dasha\", \"parent_id\": \"18a62514-96ba-11e7-bee6-00163e080cc6\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee6-00163e080cc6,\", \"sort\": 30},{ \"id\": \"18a62514-96ba-11e7-bee6-00163e080cc6\", \"name\": \"guangzhoushi\", \"parent_id\": \"0\", \"parent_ids\": \"0,\", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"608\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"609\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30},{\"id\": \"10ff533ed2c74c1caf7bab39b20c1c902\", \"name\": \"dasha2\", \"parent_id\": \"18a62514-96ba-11e7-bee6-00163e080cc62\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee6-00163e080cc6,\", \"sort\": 30},{ \"id\": \"18a62514-96ba-11e7-bee6-00163e080cc62\", \"name\": \"guangzhoushi2\", \"parent_id\": \"0\", \"parent_ids\": \"0,\", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"6082\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c902\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30}]";
+//    hanlder_camera_tree(temp.toUtf8());
 
-    QString temp2="[{ \"auxstreamname\": \"Rstp\", \"cameraid\": \"000831c9029f2ac2deb0482f384b75f0\", \"cameraname\": \"40.203\", \"mainstreamname\": \"Rstp\",\"regionid\": \"4400c2cda01b40e886c6356e5bc965c3\"},{ \"auxstreamname\": \"stream1\", \"cameraid\": \"0f5a6d72fe3a29a51bd977911e474cea\", \"cameraname\": \"120.7\", \"mainstreamname\": \"stream1\",\"regionid\": \"4400c2cda01b40e886c6356e5bc965c3\"},{ \"auxstreamname\": \"Rstp\", \"cameraid\": \"8002e3f404343c98bf8f59870799e794\", \"cameraname\": \"40.191\", \"mainstreamname\": \"Rstp\",\"regionid\":\"4400c2cda01b40e886c6356e5bc965c3\"}]";
-    hanlder_camera_list(temp2.toUtf8());
+//    QString temp2="[{ \"auxstreamname\": \"Rstp\", \"cameraid\": \"000831c9029f2ac2deb0482f384b75f0\", \"cameraname\": \"40.203\", \"mainstreamname\": \"Rstp\",\"regionid\": \"4400c2cda01b40e886c6356e5bc965c3\"},{ \"auxstreamname\": \"stream1\", \"cameraid\": \"0f5a6d72fe3a29a51bd977911e474cea\", \"cameraname\": \"120.7\", \"mainstreamname\": \"stream1\",\"regionid\": \"4400c2cda01b40e886c6356e5bc965c3\"},{ \"auxstreamname\": \"Rstp\", \"cameraid\": \"8002e3f404343c98bf8f59870799e794\", \"cameraname\": \"40.191\", \"mainstreamname\": \"Rstp\",\"regionid\":\"4400c2cda01b40e886c6356e5bc965c3\"}]";
+//    hanlder_camera_list(temp2.toUtf8());
+    get_camera_tree();
+
 }
 
 void http_worker::stop()
@@ -101,7 +103,7 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
                 m_data_info->append_catalogue_by_sort(catalogue);
 
             }
-
+            get_camera_list();
         }
 
     }else{

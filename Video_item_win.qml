@@ -53,7 +53,7 @@ Rectangle{
 
    MediaPlayer {
        id: player
-       source: "rtsp://192.168.31.170:8554/vlc"
+       source: ""
 
        onPlaying: {
 

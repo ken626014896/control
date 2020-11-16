@@ -15,8 +15,10 @@ camera_worker::camera_worker(data_info *data, QObject *parent):QObject(parent),
 
 void camera_worker::start()
 {
-    QString temp="[{ \"result\":0, \"resultdesc\":\"成功\", \"uri\":\"rtsp://192.168.31.170:8554/vlc\"}]";
-    hanlder_camera_url(temp.toUtf8());
+//    QString test_stream="[{ \"result\":0, \"resultdesc\":\"成功\", \"uri\":\"rtsp://admin:a12345678@192.168.168.120:554/h264/ch33/sub/av_stream\"}]";
+//    hanlder_camera_url(test_stream.toUtf8());
+    get_camera_url();
+
 }
 
 void camera_worker::stop()
