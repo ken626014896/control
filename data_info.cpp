@@ -102,7 +102,43 @@ QString data_info::getCameraid() const
 {
     return m_cameraid;
 }
+void data_info::send_image_incoming_event(QImage img)
+{
+    if(img.isNull()){
+        return;
+    }
+    emit image_incoming_signal(get_id(), img);
+}
 
+int data_info::getPort() const
+{
+    return m_port;
+}
+
+void data_info::setPort(int port)
+{
+    m_port = port;
+}
+
+QString data_info::getType() const
+{
+    return m_type;
+}
+
+void data_info::setType(const QString &type)
+{
+    m_type = type;
+}
+
+int data_info::getChannel() const
+{
+    return m_channel;
+}
+
+void data_info::setChannel(int channel)
+{
+    m_channel = channel;
+}
 void data_info::setCameraid(const QString &cameraid)
 {
     m_cameraid = cameraid;

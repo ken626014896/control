@@ -136,9 +136,10 @@ Rectangle{
                                item_rect.isopen=!item_rect.isopen
                                if(dmType==0){
                                    console.log("camera id :",dmId)
+                                   $manager.start_play_video(dmId)
                                    itemDisplay.visible=true
-                                   itemDisplay.source="qrc:/Video_item_win.qml"
-                                     itemDisplay.item.playerSource=dmUrl
+                                   itemDisplay.source="qrc:/Video_item_ffmpeg.qml"
+
                                }
 
                                var v = false;
@@ -182,7 +183,7 @@ Rectangle{
    Loader {
            id: itemDisplay
            anchors.fill: parent;
-            visible: false
+           visible: false
 
 
        }

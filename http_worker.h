@@ -19,6 +19,8 @@ public:
     void get_camera_list();//获取摄像机列表
 
     void get_camera_url(); //获取实时视频 URI
+
+    void test(); //测试数据
 public slots:
     void get_reply();
 private:

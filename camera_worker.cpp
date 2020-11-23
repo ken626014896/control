@@ -15,10 +15,17 @@ camera_worker::camera_worker(data_info *data, QObject *parent):QObject(parent),
 
 void camera_worker::start()
 {
-//    QString test_stream="[{ \"result\":0, \"resultdesc\":\"成功\", \"uri\":\"rtsp://admin:a12345678@192.168.168.120:554/h264/ch33/sub/av_stream\"}]";
-//    hanlder_camera_url(test_stream.toUtf8());
+#if 0
+    test();
+    qDebug()<<"coming"<<m_data_info->getCameraname();
+
+#endif
     get_camera_url();
 
+}
+void camera_worker::test()
+{
+     m_data_info->setUrl("123.com");
 }
 
 void camera_worker::stop()
@@ -78,6 +85,7 @@ void camera_worker::get_camera_url()
     reply = networkManager.post(request,post_data);
     connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
 }
+
 
 
 

@@ -6,6 +6,7 @@
 #include <QVariantMap>
 #include <QVariantList>
 #include <QSharedPointer>
+#include <QImage>
 
 class data_info : public QObject
 {
@@ -79,8 +80,21 @@ public:
 
 
     void send_camera_get_finish_signal(QString id);
+
+    void send_image_incoming_event(QImage img);
+    int getPort() const;
+    void setPort(int port);
+
+    QString getType() const;
+    void setType(const QString &type);
+
+    int getChannel() const;
+    void setChannel(int channel);
+
 signals:
     void camera_get_finish_signal(QString id); //摄像机获取完毕发送
+    void image_incoming_signal(QString id,QImage img);
+
 public slots:
 
 
@@ -88,9 +102,11 @@ protected:
     QString m_name;
     QString m_id;
     int m_index;//设备索引
-
+    int m_channel=1;
     QString m_ip_address;
+    int m_port=6801;
 
+    QString m_type=""; //作用区别
 
     QString m_parent_id;//父级目录编号
     QList<QString> m_parent_id_lsit;//所有父级目录编号

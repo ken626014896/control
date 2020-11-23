@@ -6,6 +6,8 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include <QJsonObject>
+
+#include "sy_utils.h"
 http_worker::http_worker(data_info *data, QObject *parent):QObject(parent),
     m_data_info(data),
     action_hint(-1)  //0 获取摄像机目录树  1 获取摄像机
@@ -16,12 +18,10 @@ http_worker::http_worker(data_info *data, QObject *parent):QObject(parent),
 void http_worker::start()
 {
 
+#if 0
+    test();
 
-//    QString temp="[{\"id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"name\": \"dasha\", \"parent_id\": \"18a62514-96ba-11e7-bee6-00163e080cc6\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee6-00163e080cc6,\", \"sort\": 30},{ \"id\": \"18a62514-96ba-11e7-bee6-00163e080cc6\", \"name\": \"guangzhoushi\", \"parent_id\": \"0\", \"parent_ids\": \"0,\", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"608\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"609\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c90\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30},{\"id\": \"10ff533ed2c74c1caf7bab39b20c1c902\", \"name\": \"dasha2\", \"parent_id\": \"18a62514-96ba-11e7-bee6-00163e080cc62\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee6-00163e080cc6,\", \"sort\": 30},{ \"id\": \"18a62514-96ba-11e7-bee6-00163e080cc62\", \"name\": \"guangzhoushi2\", \"parent_id\": \"0\", \"parent_ids\": \"0,\", \"sort\": 30},{ \"id\": \"4400c2cda01b40e886c6356e5bc965c3\", \"name\": \"6082\", \"parent_id\": \"10ff533ed2c74c1caf7bab39b20c1c902\", \"parent_ids\": \"0,18a62514-96ba-11e7-bee600163e080cc6,10ff533ed2c74c1caf7bab39b20c1c90, \", \"sort\": 30}]";
-//    hanlder_camera_tree(temp.toUtf8());
-
-//    QString temp2="[{ \"auxstreamname\": \"Rstp\", \"cameraid\": \"000831c9029f2ac2deb0482f384b75f0\", \"cameraname\": \"40.203\", \"mainstreamname\": \"Rstp\",\"regionid\": \"4400c2cda01b40e886c6356e5bc965c3\"},{ \"auxstreamname\": \"stream1\", \"cameraid\": \"0f5a6d72fe3a29a51bd977911e474cea\", \"cameraname\": \"120.7\", \"mainstreamname\": \"stream1\",\"regionid\": \"4400c2cda01b40e886c6356e5bc965c3\"},{ \"auxstreamname\": \"Rstp\", \"cameraid\": \"8002e3f404343c98bf8f59870799e794\", \"cameraname\": \"40.191\", \"mainstreamname\": \"Rstp\",\"regionid\":\"4400c2cda01b40e886c6356e5bc965c3\"}]";
-//    hanlder_camera_list(temp2.toUtf8());
+#endif
     get_camera_tree();
 
 }
@@ -30,7 +30,37 @@ void http_worker::stop()
 {
 
 }
+void http_worker::test()
+{
+    QList<QString>  temp;
+    temp.append("0");
+    QSharedPointer<data_info> catalogue(new data_info);
+    catalogue->set_id("123");
+    catalogue->set_name("abc");
+//                qDebug()<<catalogue->get_name();
+    catalogue->setSort(0);
+    catalogue->setParent_id("0");
+    catalogue->setParent_id_lsit(temp);
+    m_data_info->append_catalogue_by_sort(catalogue);
 
+
+    QSharedPointer<data_info> camera(new camera_info);
+    camera->set_id(getUuid());
+    camera->setCameraname("camera1");
+    camera->setRegionid("123");
+    camera->setType("GET-URL");//该对象用于获取摄像机播放url
+    m_data_info->append_camera_by_sort(camera);
+
+    QSharedPointer<data_info> camera2(new camera_info);
+    camera2->set_id(getUuid());
+    camera2->setCameraname("camera2");
+    camera2->setRegionid("123");
+    camera2->setType("GET-URL");//该对象用于获取摄像机播放url
+    m_data_info->append_camera_by_sort(camera2);
+
+
+     m_data_info->send_camera_get_finish_signal(m_data_info->get_id());
+}
 void http_worker::get_camera_tree()
 {
     QUrl newUrl = QUrl::fromUserInput("http://192.168.200.62:8000/aic/restful/getdata");//请求地址
@@ -87,6 +117,8 @@ void http_worker::get_camera_list()
     connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
 }
 
+
+
 void http_worker::get_reply()
 {
     QByteArray bytes = reply->readAll();
@@ -141,7 +173,7 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
 void http_worker::hanlder_camera_list(QByteArray bytes)
 {
 
-    qDebugx("get camera  ");
+    qDebugx("get camera");
     QJsonParseError jsonError;
     QJsonDocument jsonDoucment = QJsonDocument::fromJson(bytes, &jsonError);
     if(jsonError.error == QJsonParseError::NoError){
@@ -157,12 +189,14 @@ void http_worker::hanlder_camera_list(QByteArray bytes)
 
                 QVariantMap map=camera_list.at(i).toMap();
                 QSharedPointer<data_info> camera(new camera_info);
+                camera->set_id(getUuid());
                 camera->setAuxstreamname(map["auxstreamname"].toString());
                 camera->setMainstreamname(map["mainstreamname"].toString());
                 camera->setCameraid(map["cameraid"].toString());
                 camera->setCameraname(map["cameraname"].toString());
 //                 qDebug()<<camera->getCameraname();
                 camera->setRegionid(map["regionid"].toString());
+                camera->setType("GET-URL");//该对象用于获取摄像机播放url
                 m_data_info->append_camera_by_sort(camera);
 
             }

@@ -17,13 +17,15 @@ SOURCES += \
         camera_info.cpp \
         camera_thread.cpp \
         camera_worker.cpp \
+        camera_worker_play.cpp \
         data_info.cpp \
         data_model.cpp \
         http_info.cpp \
         http_thread.cpp \
         http_worker.cpp \
         main.cpp \
-        manager.cpp
+        manager.cpp \
+        video_item.cpp
 
 RESOURCES += qml.qrc
 
@@ -54,9 +56,16 @@ HEADERS += \
     camera_info.h \
     camera_thread.h \
     camera_worker.h \
+    camera_worker_play.h \
     data_info.h \
     data_model.h \
     http_info.h \
     http_thread.h \
     http_worker.h \
-    manager.h
+    manager.h \
+    video_item.h
+
+
+#ffmpeg导入
+INCLUDEPATH += $$PWD/ffmpeg
+include ($$PWD/ffmpeg/ffmpeg.pri)

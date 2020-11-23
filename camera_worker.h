@@ -15,7 +15,7 @@ public:
     void stop();
 
     void get_camera_url();
-
+    void test();
 
 public slots:
     void get_reply();
