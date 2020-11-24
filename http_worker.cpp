@@ -18,11 +18,11 @@ http_worker::http_worker(data_info *data, QObject *parent):QObject(parent),
 void http_worker::start()
 {
 
-#if 0
+#if 1
     test();
 
 #endif
-    get_camera_tree();
+//    get_camera_tree();
 
 }
 
@@ -44,17 +44,27 @@ void http_worker::test()
     m_data_info->append_catalogue_by_sort(catalogue);
 
 
+    QSharedPointer<data_info> catalogue2(new data_info);
+    catalogue2->set_id("456");
+    catalogue2->set_name("dfg");
+//                qDebug()<<catalogue->get_name();
+    catalogue2->setSort(0);
+    catalogue2->setParent_id("123");
+    catalogue2->setParent_id_lsit(temp);
+    m_data_info->append_catalogue_by_sort(catalogue2);
+
+
     QSharedPointer<data_info> camera(new camera_info);
     camera->set_id(getUuid());
     camera->setCameraname("camera1");
-    camera->setRegionid("123");
+    camera->setRegionid("456");
     camera->setType("GET-URL");//该对象用于获取摄像机播放url
     m_data_info->append_camera_by_sort(camera);
 
     QSharedPointer<data_info> camera2(new camera_info);
     camera2->set_id(getUuid());
     camera2->setCameraname("camera2");
-    camera2->setRegionid("123");
+    camera2->setRegionid("456");
     camera2->setType("GET-URL");//该对象用于获取摄像机播放url
     m_data_info->append_camera_by_sort(camera2);
 

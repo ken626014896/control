@@ -134,13 +134,7 @@ Rectangle{
                            onClicked: {
 //                               console.log(dmCount)
                                item_rect.isopen=!item_rect.isopen
-                               if(dmType==0){
-                                   console.log("camera id :",dmId)
-                                   $manager.start_play_video(dmId)
-                                   itemDisplay.visible=true
-                                   itemDisplay.source="qrc:/Video_item_ffmpeg.qml"
 
-                               }
 
                                var v = false;
                                for(var i=1; i < column_group.children.length -1; i++){
@@ -148,6 +142,15 @@ Rectangle{
                                    v = column_group.children[i].visible;
                                }
 
+                           }
+                           onDoubleClicked: {
+                               if(dmType==0){
+                                   console.log("camera id :",dmId)
+                                   $manager.start_play_video(dmId)
+                                   itemDisplay.visible=true
+                                   itemDisplay.source="qrc:/Video_item_ffmpeg.qml"
+
+                               }
                            }
                        }
                    }

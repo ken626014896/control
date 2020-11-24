@@ -15,12 +15,12 @@ camera_worker::camera_worker(data_info *data, QObject *parent):QObject(parent),
 
 void camera_worker::start()
 {
-#if 0
+#if 1
     test();
     qDebug()<<"coming"<<m_data_info->getCameraname();
 
 #endif
-    get_camera_url();
+//    get_camera_url();
 
 }
 void camera_worker::test()

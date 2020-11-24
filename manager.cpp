@@ -9,7 +9,7 @@ manager::manager(data_model *test,data_model *video,data_model *camera,QObject *
   m_model_camera(camera)
 {
      test_data();//测试数据
-//     begain();//开始获取摄像机数据
+     begain();//开始获取摄像机数据
 }
 
 void manager::test_data()
@@ -69,7 +69,7 @@ void manager::start_play_video(QString id)
 
    m_model_video->append(video);
 
-   start_by_switch(video);
+//   start_by_switch(video);
 
 }
 

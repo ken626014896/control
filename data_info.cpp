@@ -233,7 +233,11 @@ void data_info::append_camera_by_sort(QSharedPointer<data_info> &val)
        QSharedPointer<data_info> catalogue= m_list_catalogue.at(i);
 
        if(val->getRegionid()==catalogue->get_id())  //说明val摄像机底下属于该目录
-           catalogue->append_camera(val);
+       {
+          catalogue->append_camera(val);
+          qDebug()<<"val摄像机属于该目录";
+       }
+
 
 
 
