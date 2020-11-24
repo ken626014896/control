@@ -36,6 +36,9 @@ QVariant data_model::data(const QModelIndex &index, int role) const
     case CamerNameRole:
         rv =data->getCameraname();
         break;
+    case IdRole:
+        rv =data->get_id();
+        break;
 
     default:
         rv = QVariant();
@@ -129,6 +132,7 @@ QHash<int, QByteArray> data_model::roleNames() const
     roles[NameRole] = "dmName";
     roles[UrlRole] = "dmUrl";
     roles[CamerNameRole] = "dmCamerName";
+     roles[IdRole] = "dmId";
 
     return roles;
 }

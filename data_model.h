@@ -14,7 +14,8 @@ public:
     enum DataRoles{
         NameRole = Qt::UserRole + 1,
         UrlRole,
-        CamerNameRole
+        CamerNameRole,
+        IdRole
 
     };
     Q_PROPERTY(int current_index READ get_current_index WRITE set_current_index NOTIFY index_changed)

@@ -91,12 +91,23 @@ public:
     int getChannel() const;
     void setChannel(int channel);
 
+
+    void send_pause_video_signal();
+     void send_stop_video_signal();
+     bool getIsPause() const;
+     void setIsPause(bool value);
+
+     bool getIsPlay() const;
+     void setIsPlay(bool value);
+
+     bool getIsStop() const;
+     void setIsStop(bool value);
+
 signals:
-    void camera_get_finish_signal(QString id); //摄像机获取完毕发送
+     void camera_get_finish_signal(QString id); //摄像机获取完毕发送
     void image_incoming_signal(QString id,QImage img);
-
-public slots:
-
+    void pause_video_signal();
+    void stop_video_signal();
 
 protected:
     QString m_name;
@@ -129,6 +140,13 @@ protected:
     QList<QSharedPointer<data_info>> m_list_catalogue; //目录列表
     //以上两个变量多个地方用到， 比如目录对象下也会有摄像机列表
     void grade_well(QSharedPointer<data_info> &val);//处理好目录分级关系
+
+
+
+
+    bool isPause=false;
+    bool isPlay=true;
+    bool isStop=false;
 };
 
 #endif // DATA_INFO_H

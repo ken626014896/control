@@ -28,6 +28,9 @@ public slots:
     void pause();
     //继续播放
     void next();
+public slots:
+    void pause_video_slot();
+    void stop_video_slot();
 
 private:
 

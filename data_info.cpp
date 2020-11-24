@@ -139,6 +139,18 @@ void data_info::setChannel(int channel)
 {
     m_channel = channel;
 }
+
+void data_info::send_pause_video_signal()
+{
+    emit pause_video_signal();
+}
+
+void data_info::send_stop_video_signal()
+{
+    emit stop_video_signal();
+}
+
+
 void data_info::setCameraid(const QString &cameraid)
 {
     m_cameraid = cameraid;
@@ -228,14 +240,13 @@ void data_info::append_camera_by_sort(QSharedPointer<data_info> &val)
     m_list_camera.append(val);
     //    qDebug()<<m_list_camera;
 
-    for (int i=0;i<m_list_catalogue.length()-1;i++) {
+    for (int i=0;i<m_list_catalogue.length();i++) {
 
        QSharedPointer<data_info> catalogue= m_list_catalogue.at(i);
 
        if(val->getRegionid()==catalogue->get_id())  //说明val摄像机底下属于该目录
        {
           catalogue->append_camera(val);
-          qDebug()<<"val摄像机属于该目录";
        }
 
 
@@ -296,11 +307,41 @@ void data_info::grade_well(QSharedPointer<data_info> &val)
 
    }
 }
+
+bool data_info::getIsStop() const
+{
+    return isStop;
+}
+
+void data_info::setIsStop(bool value)
+{
+    isStop = value;
+}
+
+bool data_info::getIsPlay() const
+{
+    return isPlay;
+}
+
+void data_info::setIsPlay(bool value)
+{
+    isPlay = value;
+}
+
+bool data_info::getIsPause() const
+{
+    return isPause;
+}
+
+void data_info::setIsPause(bool value)
+{
+    isPause = value;
+}
 QVariantList data_info::get_group_childs(){
 
 
     QVariantList list;
-//    qDebug()<<m_list_catalogue.length()<<m_list_camera.length();
+    //    qDebug()<<m_list_catalogue.length()<<m_list_camera.length();
 
     for(int i=0;i<m_list_catalogue.count(); i++) {
         QSharedPointer<data_info> info = m_list_catalogue.at(i);
@@ -356,7 +397,6 @@ QVariantList data_info::get_group_childs2(const QList<QSharedPointer<data_info> 
 
         }
         else{  //没有子目录 ，开始存摄像机
-
             QVariantList camera_list=info->get_group_childs3(info->get_id());
 
             if(camera_list.length()==0) //该目录下没有摄像机
@@ -392,7 +432,8 @@ QVariantList data_info::get_group_childs3(QString id)
         }
         QVariantMap map;
         map.insert("dmName", camera->getCameraname());
-        map.insert("dmId", camera->getCameraid());
+        map.insert("dmId", camera->get_id());
+        map.insert("dmCameraId", camera->getCameraid());
         map.insert("dmGroupChilds", QVariantList());
         map.insert("dmCount", 0);
         map.insert("dmType", 0); //摄像机

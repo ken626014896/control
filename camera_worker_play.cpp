@@ -3,6 +3,7 @@
 #include <QMutex>
 #include <QDebug>
 #include <QImage>
+#include "data_info.h"
 camera_worker_play::camera_worker_play(data_info *data,QObject *parent) : QObject(parent),m_data_info(data)
 {
     stopped = false;
@@ -16,11 +17,10 @@ camera_worker_play::camera_worker_play(data_info *data,QObject *parent) : QObjec
     videoStreamIndex = -1;
     audioStreamIndex = -1;
 
-    if(m_data_info->getChannel()==33)
-     url = "rtsp://admin:a12345678@192.168.168.120:554/h264/ch33/main/av_stream";
-    else {
-        url = "rtsp://admin:a12345678@192.168.168.120:554/h264/ch55/main/av_stream";
-    }
+
+//    url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+    url=m_data_info->getUrl();
+
 
     buffer = NULL;
     avPacket = NULL;
@@ -37,6 +37,9 @@ camera_worker_play::camera_worker_play(data_info *data,QObject *parent) : QObjec
     audioDecoder = NULL;
 
     //初始化注册,一个软件中只注册一次即可
+    connect(m_data_info, &data_info::pause_video_signal, this, &camera_worker_play::pause_video_slot);
+    connect(m_data_info, &data_info::stop_video_signal, this, &camera_worker_play::stop_video_slot);
+
     camera_worker_play::initlib();
 
 }
@@ -73,11 +76,14 @@ void camera_worker_play::initlib()
 
 void camera_worker_play::start()
 {
-    while (!stopped) {
+
+    while (!m_data_info->getIsStop()) {
         //根据标志位执行初始化操作
         if (isPlay) {
-            this->init();
-            isPlay = false;
+            bool status=this->init();
+            if(status)
+              isPlay = false;
+
             continue;
         }
 
@@ -108,7 +114,9 @@ void camera_worker_play::start()
                     //QImage image(avFrame3->data[0], videoWidth, videoHeight, QImage::Format_RGB32);
                     QImage image((uchar *)buffer, videoWidth, videoHeight, QImage::Format_RGB32);
                     if (!image.isNull()) {
-                             m_data_info->send_image_incoming_event(image);
+
+                             if(!m_data_info->getIsPause())
+                                 m_data_info->send_image_incoming_event(image);
                     }
 
                     Sleep(1);
@@ -358,10 +366,21 @@ void camera_worker_play::play()
 
 void camera_worker_play::pause()
 {
-
+    isPlay = false;
 }
 
 void camera_worker_play::next()
 {
 
+}
+
+void camera_worker_play::pause_video_slot()
+{
+    qDebug()<<"pause";
+     pause();
+}
+
+void camera_worker_play::stop_video_slot()
+{
+     stop();
 }

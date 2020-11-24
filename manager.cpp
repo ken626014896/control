@@ -60,16 +60,49 @@ QVariantList manager::get_group_childs()
 
 void manager::start_play_video(QString id)
 {
+   if(id=="")
+       return;
    QSharedPointer<data_info> camera=m_model_camera->get_data_by_id(id);
+
+   if(camera.isNull())
+       return;
    QSharedPointer<data_info> video(new camera_info);
-   video->set_id(getUuid());
+
+   video->set_id(id);
    video->setUrl(camera->getUrl());
    video->setType("PLAY-VIDEO");
+   video->set_name("videoddd");
 
 
    m_model_video->append(video);
 
-//   start_by_switch(video);
+   start_by_switch(video);
+
+}
+
+void manager::pause_play_video(QString id)
+{
+    if(id=="")
+        return;
+    QSharedPointer<data_info> video=m_model_video->get_data_by_id(id);
+    if(video.isNull())
+        return;
+//    video->send_pause_video_signal();
+    video->setIsPause(!video->getIsPause());
+}
+
+void manager::stop_play_video(QString id)
+{
+    if(id=="")
+        return;
+    QSharedPointer<data_info> video=m_model_video->get_data_by_id(id);
+    if(video.isNull())
+        return;
+//    video->send_stop_video_signal();
+    video->setIsStop(true);
+
+    stop_by_switch(video);
+    m_model_video->clear();
 
 }
 

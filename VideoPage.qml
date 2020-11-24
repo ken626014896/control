@@ -145,10 +145,11 @@ Rectangle{
                            }
                            onDoubleClicked: {
                                if(dmType==0){
-                                   console.log("camera id :",dmId)
+
                                    $manager.start_play_video(dmId)
+                                   itemDisplay.video_id=dmId
                                    itemDisplay.visible=true
-                                   itemDisplay.source="qrc:/Video_item_ffmpeg.qml"
+
 
                                }
                            }
@@ -183,12 +184,11 @@ Rectangle{
 //   }
 
 
-   Loader {
-           id: itemDisplay
-           anchors.fill: parent;
-           visible: false
+   Video_item_ffmpeg{
+       id: itemDisplay
+       anchors.fill: parent
+       visible: false
 
-
-       }
+   }
 }
 

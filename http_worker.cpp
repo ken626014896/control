@@ -18,11 +18,16 @@ http_worker::http_worker(data_info *data, QObject *parent):QObject(parent),
 void http_worker::start()
 {
 
-#if 1
+#if 0
     test();
 
 #endif
-//    get_camera_tree();
+
+#if 1
+    get_camera_tree();
+
+#endif
+
 
 }
 
@@ -56,6 +61,7 @@ void http_worker::test()
 
     QSharedPointer<data_info> camera(new camera_info);
     camera->set_id(getUuid());
+    camera->setCameraid(getUuid());
     camera->setCameraname("camera1");
     camera->setRegionid("456");
     camera->setType("GET-URL");//该对象用于获取摄像机播放url
@@ -63,6 +69,7 @@ void http_worker::test()
 
     QSharedPointer<data_info> camera2(new camera_info);
     camera2->set_id(getUuid());
+    camera2->setCameraid(getUuid());
     camera2->setCameraname("camera2");
     camera2->setRegionid("456");
     camera2->setType("GET-URL");//该对象用于获取摄像机播放url

@@ -20,6 +20,8 @@ public:
 
 
     Q_INVOKABLE  void start_play_video(QString id);
+    Q_INVOKABLE  void pause_play_video(QString id);
+    Q_INVOKABLE  void stop_play_video(QString id);
 signals:
 
 public slots:

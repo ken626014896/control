@@ -1,4 +1,4 @@
-#include "video_item.h"
+﻿#include "video_item.h"
 
 
 #include <QDateTime>
@@ -71,7 +71,7 @@ void video_item::create_data_info()
             m_data_info = m_data_model_signal_source->get_data_by_id(m_id);
             if(!m_data_info.isNull()){
 //                qDebugxx(qtr("建立连接"), m_data_info->get_name());
-
+                qDebug()<<"connect viode";
                 connect(m_data_info.data(), &data_info::image_incoming_signal,
                         this, &video_item::image_incoming_slot);
                 if(!m_image.isNull()){
@@ -85,7 +85,7 @@ void video_item::create_data_info()
 void video_item::set_id(QString val)
 {
     m_id = val;
-//    qDebug()<<this<<1;
+
     create_data_info();
     emit id_changed();
 }
