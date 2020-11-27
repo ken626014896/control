@@ -106,6 +106,17 @@ void manager::stop_play_video(QString id)
 
 }
 
+void manager::ptz_control(QString id,QString cmd, QString status, int speed1, int speed2)
+{
+    if(cmd=="")
+        return;
+    QSharedPointer<data_info> camera=m_model_camera->get_data_by_id(id);
+    if(camera.isNull())
+        return;
+
+    camera->send_ptz_control_signal(cmd,status,speed1,speed2);
+}
+
 void manager::camera_get_finish_slot(QString id) //获取摄像机的播放地址
 {
     QSharedPointer<data_info> http=http_list.at(0);

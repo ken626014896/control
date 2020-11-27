@@ -4,6 +4,7 @@ import videoitem 1.0
 Rectangle {
    anchors.fill: parent
    property var video_id: ""
+   property var camera_id: video_id
       ListView {
           id:video_list
           width: parent.width
@@ -34,6 +35,7 @@ Rectangle {
       Row{
          anchors.horizontalCenter: parent.horizontalCenter
          spacing: 10
+         anchors.bottom: parent.bottom
          Button{
              text: "pause"
              onClicked: {
@@ -46,6 +48,15 @@ Rectangle {
                  $manager.stop_play_video(video_id)
                  itemDisplay.visible=false
              }
+         }
+         Button{
+
+             onClicked: {
+                 $manager.ptz_control(camera_id,"left","start",2,2)
+
+             }
+             text: "test"
+
          }
       }
 

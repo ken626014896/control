@@ -18,12 +18,12 @@ http_worker::http_worker(data_info *data, QObject *parent):QObject(parent),
 void http_worker::start()
 {
 
-#if 0
+#if 1
     test();
 
 #endif
 
-#if 1
+#if 0
     get_camera_tree();
 
 #endif

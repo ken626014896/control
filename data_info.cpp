@@ -318,6 +318,12 @@ void data_info::setIsStop(bool value)
     isStop = value;
 }
 
+void data_info::send_ptz_control_signal(QString cmd, QString status, int speed1, int speed2)
+{
+    emit ptz_control_signal(cmd,status,speed1,speed2);
+
+}
+
 bool data_info::getIsPlay() const
 {
     return isPlay;

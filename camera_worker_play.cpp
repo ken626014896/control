@@ -1,9 +1,15 @@
 ﻿#include "camera_worker_play.h"
-#include <windows.h>
 #include <QMutex>
 #include <QDebug>
 #include <QImage>
 #include "data_info.h"
+#include <QThread>
+
+#ifdef WIN32
+
+    #include <windows.h>
+#endif
+
 camera_worker_play::camera_worker_play(data_info *data,QObject *parent) : QObject(parent),m_data_info(data)
 {
     stopped = false;
@@ -18,8 +24,8 @@ camera_worker_play::camera_worker_play(data_info *data,QObject *parent) : QObjec
     audioStreamIndex = -1;
 
 
-//    url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
-    url=m_data_info->getUrl();
+    url = "rtsp://admin:a12345678@192.168.168.120:554/h264/ch57/sub/av_stream";
+//    url=m_data_info->getUrl();
 
 
     buffer = NULL;
@@ -118,8 +124,8 @@ void camera_worker_play::start()
                              if(!m_data_info->getIsPause())
                                  m_data_info->send_image_incoming_event(image);
                     }
+                    QThread::usleep(1);
 
-                    Sleep(1);
                 }
             } else if (index == audioStreamIndex) {
                 //解码音频流,这里暂不处理,以后交给sdl播放
@@ -128,7 +134,7 @@ void camera_worker_play::start()
 
         av_packet_unref(avPacket);
         av_freep(avPacket);
-        Sleep(1);
+        QThread::usleep(1);
     }
 
     //线程结束后释放资源
@@ -221,7 +227,7 @@ bool camera_worker_play::init()
             return false;
         }
 
-        QString videoInfo = QString("视频流信息 -> 索引: %1  解码: %2  格式: %3  时长: %4 秒  分辨率: %5*%6")
+        QString videoInfo = QStringLiteral("视频流信息 -> 索引: %1  解码: %2  格式: %3  时长: %4 秒  分辨率: %5*%6")
                             .arg(videoStreamIndex).arg(videoDecoder->name).arg(avFormatContext->iformat->name)
                             .arg((avFormatContext->duration) / 1000000).arg(videoWidth).arg(videoHeight);
         qDebug() << TIMEMS << videoInfo;
@@ -262,7 +268,7 @@ bool camera_worker_play::init()
                 return false;
             }
 
-            QString audioInfo = QString("音频流信息 -> 索引: %1  解码: %2  比特率: %3  声道数: %4  采样: %5")
+            QString audioInfo = QStringLiteral("音频流信息 -> 索引: %1  解码: %2  比特率: %3  声道数: %4  采样: %5")
                                 .arg(audioStreamIndex).arg(audioDecoder->name).arg(avFormatContext->bit_rate)
                                 .arg(audioCodec->channels).arg(audioCodec->sample_rate);
             qDebug() << TIMEMS << audioInfo;

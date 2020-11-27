@@ -22,6 +22,8 @@ public:
     Q_INVOKABLE  void start_play_video(QString id);
     Q_INVOKABLE  void pause_play_video(QString id);
     Q_INVOKABLE  void stop_play_video(QString id);
+
+    Q_INVOKABLE  void ptz_control(QString id,QString cmd,QString status,int speed1,int speed2);
 signals:
 
 public slots:
