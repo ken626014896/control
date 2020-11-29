@@ -9,7 +9,6 @@ Rectangle{
    color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
    property  var height_e: 50
    property alias objModel_a: objModel
-
    Rectangle{ //通道号页面
        anchors.fill: parent
        id:channel_rect
@@ -149,6 +148,7 @@ Rectangle{
                                    $manager.start_play_video(dmId)
                                    itemDisplay.video_id=dmId
                                    itemDisplay.visible=true
+                                   itemDisplay.busy_vis=true
 
 
                                }
@@ -176,12 +176,7 @@ Rectangle{
        }
    }
 
-//   Video_item_win{
-//       id: itemDisplay
-//       anchors.fill: parent
-//       visible: false
 
-//   }
 
 
    Video_item_ffmpeg{

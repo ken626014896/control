@@ -103,7 +103,7 @@ void camera_worker::ptz_control(QString cmd, QString status, int speed1, int spe
     parmJson_data.append(ch_cmd);
 
     parmJson_data.append("\",\"status\":\"");
-    char*  ch_status=cmd.toLatin1().data();
+    char*  ch_status=status.toLatin1().data();
     parmJson_data.append(ch_status);
 
     parmJson_data.append("\",\"speed1\":");

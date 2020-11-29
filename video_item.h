@@ -1,4 +1,4 @@
-#ifndef VIDEO_ITEM_H
+﻿#ifndef VIDEO_ITEM_H
 #define VIDEO_ITEM_H
 
 #include <QObject>
@@ -45,6 +45,8 @@ signals:
     void id_changed();
     void model_changed();
 
+    void play_signal();
+
 public slots:
     void image_incoming_slot(QString id, QImage img);
 
@@ -56,6 +58,7 @@ private:
     data_model *m_data_model_signal_source;
     QSharedPointer<data_info> m_data_info;
     void create_data_info();
+    bool isfristplay=true;
 };
 
 #endif // VIDEO_ITEM_H

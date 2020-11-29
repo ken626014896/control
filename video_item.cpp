@@ -71,12 +71,12 @@ void video_item::create_data_info()
             m_data_info = m_data_model_signal_source->get_data_by_id(m_id);
             if(!m_data_info.isNull()){
 //                qDebugxx(qtr("建立连接"), m_data_info->get_name());
-                qDebug()<<"connect viode";
+                qDebug()<<"connect viode"<<this;
+
+
                 connect(m_data_info.data(), &data_info::image_incoming_signal,
                         this, &video_item::image_incoming_slot);
-                if(!m_image.isNull()){
-                    update();
-                }
+
             }
 
     }
@@ -151,5 +151,11 @@ void video_item::image_incoming_slot(QString id, QImage img)
         QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss");
 //         qDebug()  <<"update" <<img.size()<<current_date;
         this->update();
+        if(isfristplay){
+
+            emit play_signal();
+            isfristplay=false;
+        }
+
     }
 }
