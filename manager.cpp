@@ -120,8 +120,26 @@ void manager::ptz_control(QString id,QString cmd, QString status, int speed1, in
 void manager::camera_get_finish_slot(QString id) //获取摄像机的播放地址
 {
     QSharedPointer<data_info> http=http_list.at(0);
-    m_model_camera->append(http->getList_camera());
-    start_by_switch(m_model_camera->get_data_list());
+
+    foreach(QSharedPointer<data_info> info, http->getList_camera()) {
+        if(info.isNull()) {
+            continue;
+        }
+        m_model_camera->append(info);
+        connect(info.data(), &data_info::get_video_url_signal, this, &manager::get_video_url_slot);
+        start_by_switch(info);
+    }
+
+//    m_model_camera->append(http->getList_camera());
+    //    start_by_switch(m_model_camera->get_data_list());
+}
+
+void manager::get_video_url_slot(int index)
+{
+    if(m_model_camera == nullptr) {
+        return;
+    }
+    m_model_camera->data_changed_slot(index);
 }
 
 void manager::stop_by_switch(QList<QSharedPointer<data_info> > list)

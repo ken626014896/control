@@ -158,6 +158,7 @@ void camera_worker::hanlder_camera_url(QByteArray bytes)
                 QVariantMap map=catalogue_list.at(i).toMap();
                 QSharedPointer<data_info> catalogue(new data_info);
                 m_data_info->setUrl(map["uri"].toString());
+                m_data_info->send_get_video_url_signal();
 
             }
 

@@ -28,7 +28,7 @@ signals:
 
 public slots:
     void camera_get_finish_slot(QString id);
-
+    void get_video_url_slot(int index);
 private:
     data_model *m_model_test;
     data_model *m_model_video;

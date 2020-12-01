@@ -24,7 +24,7 @@ camera_worker_play::camera_worker_play(data_info *data,QObject *parent) : QObjec
     audioStreamIndex = -1;
 
 
-    url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+    url = "rtsp://admin:a12345678@192.168.168.120:554/h264/ch33/sub/av_stream";
 //    url=m_data_info->getUrl();
 
 

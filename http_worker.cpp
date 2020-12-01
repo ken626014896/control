@@ -207,6 +207,7 @@ void http_worker::hanlder_camera_list(QByteArray bytes)
                 QVariantMap map=camera_list.at(i).toMap();
                 QSharedPointer<data_info> camera(new camera_info);
                 camera->set_id(getUuid());
+                camera->set_index(i);
                 camera->setAuxstreamname(map["auxstreamname"].toString());
                 camera->setMainstreamname(map["mainstreamname"].toString());
                 camera->setCameraid(map["cameraid"].toString());

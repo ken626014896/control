@@ -105,12 +105,17 @@ public:
 
 
      void send_ptz_control_signal(QString cmd,QString status,int speed1,int speed2);
+
+     void send_get_video_url_signal();
+
 signals:
      void camera_get_finish_signal(QString id); //摄像机获取完毕发送
     void image_incoming_signal(QString id,QImage img);
     void pause_video_signal();
     void stop_video_signal();
     void ptz_control_signal(QString cmd,QString status,int speed1,int speed2);
+
+    void get_video_url_signal(int index);
 protected:
     QString m_name;
     QString m_id;

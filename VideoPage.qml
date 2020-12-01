@@ -144,7 +144,8 @@ Rectangle{
                            }
                            onDoubleClicked: {
                                if(dmType==0){
-
+                                   if(dmUrl=="")
+                                       return
                                    $manager.start_play_video(dmId)
                                    itemDisplay.video_id=dmId
                                    itemDisplay.visible=true

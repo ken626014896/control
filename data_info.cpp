@@ -324,6 +324,11 @@ void data_info::send_ptz_control_signal(QString cmd, QString status, int speed1,
 
 }
 
+void data_info::send_get_video_url_signal()
+{
+    emit get_video_url_signal(get_index());
+}
+
 bool data_info::getIsPlay() const
 {
     return isPlay;
