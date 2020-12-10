@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include <QJsonObject>
-#include "sy_logger.h"
+
 camera_worker::camera_worker(data_info *data, QObject *parent):QObject(parent),
     m_data_info(data),
     action_hint(-1)  //0 获取摄像机播放url  1 ptz控制
@@ -168,7 +168,7 @@ void camera_worker::hanlder_camera_url(QByteArray bytes)
 
         //检查错误类型
         qDebug()<<"hanlder_camera_url jsonError:"<<jsonError.errorString();
-        qDebugxx("hanlder_camera_url jsonError:",jsonError.errorString());
+//        qDebugxx("hanlder_camera_url jsonError:",jsonError.errorString());
     }
 }
 

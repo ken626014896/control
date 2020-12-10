@@ -162,7 +162,7 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
             QVariantMap  catalogue_list_map=all_catalogue_list.at(0).toMap();
 
             QVariantList  catalogue_list=catalogue_list_map["datas"].toList();
-            qDebugxx("get catalogue num: ",catalogue_list.length());
+//            qDebugxx("get catalogue num: ",catalogue_list.length());
             for (int i=0;i<catalogue_list.length();i++) {
 
                 QVariantMap map=catalogue_list.at(i).toMap();
@@ -182,7 +182,7 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
     }else{
 
         //检查错误类型
-        qDebugxx("hanlder_camera_tree jsonError:",jsonError.errorString());
+//        qDebugxx("hanlder_camera_tree jsonError:",jsonError.errorString());
         qDebug()<<"hanlder_camera_tree jsonError:"<<jsonError.errorString();
     }
 }
@@ -190,7 +190,7 @@ void http_worker::hanlder_camera_tree(QByteArray bytes)
 void http_worker::hanlder_camera_list(QByteArray bytes)
 {
 
-    qDebugx("get camera");
+//    qDebugx("get camera");
     QJsonParseError jsonError;
     QJsonDocument jsonDoucment = QJsonDocument::fromJson(bytes, &jsonError);
     if(jsonError.error == QJsonParseError::NoError){
@@ -201,7 +201,7 @@ void http_worker::hanlder_camera_list(QByteArray bytes)
             QVariantMap  camera_list_map=all_camera_list.at(0).toMap();
 
             QVariantList  camera_list=camera_list_map["datas"].toList();
-            qDebugxx("get camera num: ",camera_list.length());
+//            qDebugxx("get camera num: ",camera_list.length());
             for (int i=0;i<camera_list.length();i++) {
 
                 QVariantMap map=camera_list.at(i).toMap();
@@ -224,7 +224,7 @@ void http_worker::hanlder_camera_list(QByteArray bytes)
     }else{
 
         //检查错误类型
-        qDebugxx("hanlder_camera_list jsonError:",jsonError.errorString());
+//        qDebugxx("hanlder_camera_list jsonError:",jsonError.errorString());
         qDebug()<<"hanlder_camera_list jsonError:"<<jsonError.errorString();
     }
 

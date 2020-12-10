@@ -1,6 +1,6 @@
 ﻿#ifndef HTTP_INFO_H
 #define HTTP_INFO_H
-#include "sy_logger.h"
+
 #include <QObject>
 #include  "data_info.h"
 #include  "http_thread.h"

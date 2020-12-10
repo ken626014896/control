@@ -1,5 +1,5 @@
 ﻿#include "http_thread.h"
-#include "sy_logger.h"
+
 #include "http_worker.h"
 http_thread::http_thread(data_info *data, QObject *parent):
     QThread(parent),

@@ -41,7 +41,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 UI_DIR=./UI
 
-msvc:QMAKE_CXXFLAGS += -source-charset:utf-8
+#msvc:QMAKE_CXXFLAGS += -source-charset:utf-8
 
 win32{
     LIBS += -lbcrypt -lws2_32 -lsecur32
@@ -69,3 +69,7 @@ HEADERS += \
 #ffmpeg导入
 INCLUDEPATH += $$PWD/ffmpeg
 include ($$PWD/ffmpeg/ffmpeg.pri)
+
+
+#INCLUDEPATH += $$PWD/hk
+#include ($$PWD/hk/hk.pri)   #海康sdk导入

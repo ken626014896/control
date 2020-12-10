@@ -1,5 +1,5 @@
 ﻿#include "camera_thread.h"
-#include "sy_logger.h"
+
 #include "camera_worker.h"
 #include "camera_worker_play.h"
 camera_thread::camera_thread(data_info *data, QObject *parent):
