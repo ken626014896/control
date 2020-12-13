@@ -72,10 +72,10 @@ public:
 
     QVariantList get_group_childs(); //获取根目录
 
-    QVariantList get_group_childs2(const QList<QSharedPointer<data_info> > &list2);//获取不是根目录
+    QVariantList get_group_childs2(const QList<QSharedPointer<data_info> > &list2,int level);//获取不是根目录
 
 
-    QVariantList get_group_childs3(QString id); //获取目录下的摄像机
+    QVariantList get_group_childs3(QString id,int level); //获取目录下的摄像机
 
 
 

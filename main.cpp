@@ -8,7 +8,7 @@
 #include "sy_minidump.h"
 
 #include "sy_utils.h"
-//#include "sy_logger.h"
+#include "sy_logger.h"
 
 #include "data_info.h"
 #include "manager.h"
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 //    qlogEx(qtr("启动"));
 //    qWarnxx(qtr("测试日志"), "test");
-//    qDebugxxx(qtr("测试日志"), "test", "testtest");
+    qDebugxxx(qtr("测试日志"), "test", "testtest");
     QQmlApplicationEngine engine;
 
     int fontId=QFontDatabase::addApplicationFont(":/font/fontawesome-webfont.ttf");

@@ -13,7 +13,7 @@ data_info::data_info(QObject *parent) : QObject(parent),
    m_mainstreamname(QString()),
    m_regionid(QString()),
    m_resultdesc(QString()),
-   m_url(QString()),
+   m_url(""),
    m_sort(-1),
    m_result(-1)
 {
@@ -365,10 +365,11 @@ QVariantList data_info::get_group_childs(){
         map.insert("dmCount", 0);
         map.insert("dmType", 1); //目录
         map.insert("dmGroupChilds", QVariantList());
+         map.insert("dmLevel", 0);
         if(info->getList_catalogue() .length()>0){
             qDebug() <<info->get_name()<< "find catalogue childs";
 
-            QVariantList list = info->get_group_childs2(info->getList_catalogue()); //分组中的信号列表
+            QVariantList list = info->get_group_childs2(info->getList_catalogue(),1); //分组中的信号列表
             map.insert("dmGroupChilds", list);
             map.insert("dmCount", list.count());
 
@@ -385,7 +386,7 @@ QVariantList data_info::get_group_childs(){
 
 }
 
-QVariantList data_info::get_group_childs2(const QList<QSharedPointer<data_info> > &list2)
+QVariantList data_info::get_group_childs2(const QList<QSharedPointer<data_info> > &list2,int level)
 {
     QVariantList list;
 
@@ -398,17 +399,19 @@ QVariantList data_info::get_group_childs2(const QList<QSharedPointer<data_info> 
         map.insert("dmName", info->get_name());
         map.insert("dmId", info->get_id());
         map.insert("dmType", 1); //目录
+        map.insert("dmLevel", level);
         if(info->getList_catalogue() .length()>0){ //存在子目录
             qDebug() << info->get_name()<<"find catalogue childs";
-
-            QVariantList list = info->get_group_childs2(info->getList_catalogue()); //分组中的信号列表
+            int tmp_level=level;
+            QVariantList list = info->get_group_childs2(info->getList_catalogue(),++tmp_level); //分组中的信号列表
             map.insert("dmGroupChilds", list);
             map.insert("dmCount", list.count());
 
 
         }
         else{  //没有子目录 ，开始存摄像机
-            QVariantList camera_list=info->get_group_childs3(info->get_id());
+            int tmp_level=level;
+            QVariantList camera_list=info->get_group_childs3(info->get_id(),++tmp_level);
 
             if(camera_list.length()==0) //该目录下没有摄像机
             {
@@ -430,7 +433,7 @@ QVariantList data_info::get_group_childs2(const QList<QSharedPointer<data_info> 
     return list;
 }
 
-QVariantList data_info::get_group_childs3(QString id)
+QVariantList data_info::get_group_childs3(QString id,int level)
 {
     QVariantList list;
 
@@ -441,6 +444,7 @@ QVariantList data_info::get_group_childs3(QString id)
         if(camera.isNull()||camera->getRegionid()!=id){
             continue;
         }
+
         QVariantMap map;
         map.insert("dmName", camera->getCameraname());
         map.insert("dmId", camera->get_id());
@@ -449,6 +453,7 @@ QVariantList data_info::get_group_childs3(QString id)
         map.insert("dmCount", 0);
         map.insert("dmType", 0); //摄像机
         map.insert("dmUrl",camera->getUrl());
+        map.insert("dmLevel", level);
         list.append(map);
     }
 

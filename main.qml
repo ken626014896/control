@@ -9,7 +9,7 @@ Window {
     visible: true
     width: 330
     height: 560
-    title: qsTr("Hello World")
+    title: qsTr("水利监控")
     ListModel{
        id:itemModel
        ListElement{

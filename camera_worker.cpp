@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include <QJsonObject>
-
+#include "sy_logger.h"
 camera_worker::camera_worker(data_info *data, QObject *parent):QObject(parent),
     m_data_info(data),
     action_hint(-1)  //0 获取摄像机播放url  1 ptz控制
@@ -68,7 +68,7 @@ void camera_worker::get_camera_url()
     post_data.append("&");
     post_data.append("parmJson=");
     post_data.append(post_data3);
-
+    qDebug()<<post_data;
 
     action_hint=0;
     reply = networkManager.post(request,post_data);
@@ -78,12 +78,24 @@ void camera_worker::get_camera_url()
 void camera_worker::ptz_control(QString cmd, QString status, int speed1, int speed2)
 {
 
-    QUrl newUrl = QUrl::fromUserInput("http://192.168.200.62:8000/aic/restful/getdata");//请求地址
+    QUrl newUrl = QUrl::fromUserInput("http://192.168.200.62:8000/aic/restful/video");//请求地址
     QNetworkRequest request;
-    QByteArray text("admin:admin");
+
+    QString test="admin:admin";
+    QByteArray ba;
+    ba=test.toUtf8();           //QByteArray
+    ba=ba.toBase64();          //Base64
+    char * cx=ba.data();       //char *
+    QString b64qs1=QString(cx);//QString
+    qDebug()<<b64qs1<<"Basic YWRtaW46YWRtaW4=";
+    QString au_str="Basic "+b64qs1;
+    char*  ch;
+    QByteArray ba2 = au_str.toLatin1(); // must
+    ch=ba2.data();
+
 
     request.setUrl(newUrl);
-    request.setRawHeader("Authorization","Basic YWRtaW46YWRtaW4=");//Authorization身份验证
+    request.setRawHeader("Authorization",ch);//Authorization身份验证
     request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
 
 
@@ -91,27 +103,21 @@ void camera_worker::ptz_control(QString cmd, QString status, int speed1, int spe
     QByteArray post_data;
     QByteArray authorJson_data("{\"loginAccount\":\"admin\"}");
 
+    QJsonDocument m_httpDocum;
+    QByteArray  m_httpData;
+    QJsonObject _exampleObject;
+    QJsonObject _paramsObject;
+    _exampleObject.insert("code", "ptzControl");
+    _exampleObject.insert("params", _paramsObject);
 
-    QString  str=m_data_info->getCameraid();
-    char*  ch;
-    QByteArray ba = str.toLatin1(); // must
-    ch=ba.data();
-    QByteArray parmJson_data="{\"code\":\"getRealUri\",\"params\":{\"cameraid\":\"";
-    parmJson_data.append(ch);
-    parmJson_data.append("\",\"cmd\":\"");
-    char*  ch_cmd=cmd.toLatin1().data();
-    parmJson_data.append(ch_cmd);
-
-    parmJson_data.append("\",\"status\":\"");
-    char*  ch_status=status.toLatin1().data();
-    parmJson_data.append(ch_status);
-
-    parmJson_data.append("\",\"speed1\":");
-    parmJson_data.append(speed1);
-
-    parmJson_data.append(",\"speed2\":");
-    parmJson_data.append(speed2);
-    parmJson_data.append("}}");
+    _paramsObject.insert("cameraid",m_data_info->getCameraid());
+    _paramsObject.insert("cmd",cmd);
+    _paramsObject.insert("status",status);
+    _paramsObject.insert("speed1",speed1);
+    _paramsObject.insert("speed2",speed2);
+    _exampleObject.insert("params", _paramsObject);
+    m_httpDocum.setObject(_exampleObject);
+    m_httpData = m_httpDocum.toJson(QJsonDocument::Compact);
 
 
 
@@ -119,13 +125,13 @@ void camera_worker::ptz_control(QString cmd, QString status, int speed1, int spe
     post_data.append(authorJson_data);
     post_data.append("&");
     post_data.append("parmJson=");
-    post_data.append(parmJson_data);
+    post_data.append(m_httpData);
 
     qDebug()<<post_data;
-
+    qDebugxx(qtr("hanlder_camera_ptz send:"), QString(post_data));
     action_hint=1;
-//    reply = networkManager.post(request,post_data);
-//    connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
+    reply = networkManager.post(request,post_data);
+    connect(reply,SIGNAL(finished()),this,SLOT(get_reply()));
 }
 
 
@@ -145,6 +151,7 @@ void camera_worker::get_reply()
 
 void camera_worker::hanlder_camera_url(QByteArray bytes)
 {
+    qDebugxx(qtr("hanlder_camera_url res:"), QString(bytes));
     QJsonParseError jsonError;
     QJsonDocument jsonDoucment = QJsonDocument::fromJson(bytes, &jsonError);
     if(jsonError.error == QJsonParseError::NoError){
@@ -174,5 +181,5 @@ void camera_worker::hanlder_camera_url(QByteArray bytes)
 
 void camera_worker::hanlder_camera_ptz(QByteArray bytes)
 {
-
+   qDebugxx(qtr("hanlder_camera_ptz res:"), QString(bytes));
 }

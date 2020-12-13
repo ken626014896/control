@@ -61,100 +61,137 @@ Rectangle{
                        height: c_listview.height/9
                        width: c_listview.width
                        border.color: "black"
-                       color: rect_btn.pressed?"#1E90FF":"white"
+                       color: rect_btn.pressed||rect_btn2.pressed?"#1E90FF":"white"
                        property bool isopen: true
-                       Row{
-                           anchors.fill: parent
-                           spacing: 10
 
-                           Rectangle{
-                               anchors.verticalCenter: parent.verticalCenter
-                               height: parent.height*0.8
-                               width: height
-                               visible: dmType==1
-                               color: "transparent"
-                               Text {
-
-                                   text: item_rect.isopen?"\uf107":"\uf105"
-                                   color: "grey"
-                                   anchors.centerIn: parent
-                                   font.pixelSize: parent.height*0.6
-                                   font.family: "FontAwesome"
-
-                               }
-
-                           }
-
-                           Text {
-                               text: "\uf0e8"
-                               color: "grey"
-                               visible: dmType==1
-                               font.pixelSize: parent.height/2
-                               font.family: "FontAwesome"
-                               anchors.verticalCenter: parent.verticalCenter
-                           }
-
-                           Rectangle{
-                               anchors.verticalCenter: parent.verticalCenter
-                               height: parent.height*0.8
-                               width: height
-                               visible: dmType==0
-                               color: "transparent"
+                       Rectangle{ //目录
+                          anchors.fill: parent
+                          color: "transparent"
+                          visible: dmType==1
+                          Row{
+                              anchors.left: parent.left
+                              anchors.right: parent.right
+                              height: parent.height
+                              spacing: parent.width*0.02
+                              anchors.leftMargin: parent.width*0.02+parent.height/2*dmLevel
 
 
-                           }
-                           Text {
-                               text: "\uf03d"
-                               color: "grey"
-                               visible: dmType==0
-                               font.pixelSize: parent.height/2
-                               font.family: "FontAwesome"
-                               anchors.verticalCenter: parent.verticalCenter
-                           }
-                           Text {
-                               text:dmName
-                               anchors.verticalCenter: parent.verticalCenter
-                               font.pixelSize: parent.height/3
-                               font.family: "微软雅黑"
-                           }
+                              Rectangle{
+                                  width:camera_icon.contentWidth
+                                  height: camera_icon.contentHeight
+                                  color: "transparent"
+                                  anchors.verticalCenter: parent.verticalCenter
 
-                           Text {
-                               text:dmType==0?dmUrl:""
-                               font.pixelSize: parent.height/4
-                               anchors.verticalCenter: parent.verticalCenter
+                                  Text {
 
-                           }
+                                      text: item_rect.isopen?"\uf107":"\uf105"
+                                      color: "grey"
+                                      anchors.centerIn: parent
+                                      font.pixelSize: parent.height*0.8
+                                      font.family: "FontAwesome"
+
+                                  }
+                              }
+
+                              Text {
+                                  text: "\uf0e8"
+                                  color: "grey"
+                                  visible: dmType==1
+                                  font.pixelSize: parent.height/2
+                                  font.family: "FontAwesome"
+                                  anchors.verticalCenter: parent.verticalCenter
+                              }
+                              Text {
+                                  text:dmName
+                                  anchors.verticalCenter: parent.verticalCenter
+                                  font.pixelSize: parent.height/3
+                                  font.family: "微软雅黑"
+                              }
+
+
+//                              Text {
+//                                  text:dmLevel
+//                                  font.pixelSize: parent.height/4
+//                                  anchors.verticalCenter: parent.verticalCenter
+//                                  color: "red"
+
+//                              }
+                          }
+                          MouseArea{
+                              id:rect_btn
+                              anchors.fill: parent
+                              onClicked: {
+   //                               console.log(dmCount)
+                                  item_rect.isopen=!item_rect.isopen
+
+
+                                  var v = false;
+                                  for(var i=1; i < column_group.children.length -1; i++){
+                                      column_group.children[i].visible = !column_group.children[i].visible
+                                      v = column_group.children[i].visible;
+                                  }
+
+                              }
+                          }
+
+                       }
+                       Rectangle{ //摄像机
+                          anchors.fill: parent
+                          color: "transparent"
+                          visible: dmType==0
+                          Row{
+                              anchors.left: parent.left
+                              anchors.right: parent.right
+                              height: parent.height
+                              spacing: parent.width*0.02
+                              anchors.leftMargin: parent.width*0.02+parent.height/2*dmLevel
+                              Text {
+                                  id:camera_icon
+                                  text: "\uf03d"
+                                  color: "grey"
+                                  font.pixelSize: parent.height/2
+                                  font.family: "FontAwesome"
+                                  anchors.verticalCenter: parent.verticalCenter
+                              }
+                              Text {
+                                  text:dmName
+                                  anchors.verticalCenter: parent.verticalCenter
+                                  font.pixelSize: parent.height/3
+                                  font.family: "微软雅黑"
+                              }
+
+                              Text {
+                                  text:dmUrl
+                                  font.pixelSize: parent.height/4
+                                  anchors.verticalCenter: parent.verticalCenter
+                                  visible: dmType==0
+
+                              }
+
+//                              Text {
+//                                  text:dmLevel
+//                                  font.pixelSize: parent.height/4
+//                                  anchors.verticalCenter: parent.verticalCenter
+//                                  color: "red"
+
+//                              }
+                          }
+                          MouseArea{
+                            id:rect_btn2
+                            anchors.fill: parent
+                            onDoubleClicked: {
+                                    if(dmUrl=="")
+                                        return
+                                    $manager.start_play_video(dmId)
+                                    itemDisplay.video_id=dmId
+                                    itemDisplay.visible=true
+                                    itemDisplay.busy_vis=true
+
+                            }
+                          }
 
                        }
 
-                       MouseArea{
-                           id:rect_btn
-                           anchors.fill: parent
-                           onClicked: {
-//                               console.log(dmCount)
-                               item_rect.isopen=!item_rect.isopen
-
-
-                               var v = false;
-                               for(var i=1; i < column_group.children.length -1; i++){
-                                   column_group.children[i].visible = !column_group.children[i].visible
-                                   v = column_group.children[i].visible;
-                               }
-
-                           }
-                           onDoubleClicked: {
-                               if(dmType==0){
-                                   if(dmUrl=="")
-                                       return
-                                   $manager.start_play_video(dmId)
-                                   itemDisplay.video_id=dmId
-                                   itemDisplay.visible=true
-                                   itemDisplay.busy_vis=true
-
-
-                               }
-                           }
-                       }
                    }
 
                }

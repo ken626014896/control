@@ -76,6 +76,35 @@ void http_worker::test()
     m_data_info->append_camera_by_sort(camera2);
 
 
+    QSharedPointer<data_info> catalogue3(new data_info);
+    catalogue3->set_id("aaa");
+    catalogue3->set_name("dfg");
+//                qDebug()<<catalogue->get_name();
+    catalogue3->setSort(0);
+    catalogue3->setParent_id("0");
+    catalogue3->setParent_id_lsit(temp);
+    m_data_info->append_catalogue_by_sort(catalogue3);
+
+    QSharedPointer<data_info> catalogue4(new data_info);
+    catalogue4->set_id("bbbb");
+    catalogue4->set_name("dfg");
+//                qDebug()<<catalogue->get_name();
+    catalogue4->setSort(0);
+    catalogue4->setParent_id("aaa");
+    catalogue4->setParent_id_lsit(temp);
+    m_data_info->append_catalogue_by_sort(catalogue4);
+
+    QSharedPointer<data_info> catalogue5(new data_info);
+    catalogue5->set_id("ccc");
+    catalogue5->set_name("dfg");
+//                qDebug()<<catalogue->get_name();
+    catalogue5->setSort(0);
+    catalogue5->setParent_id("aaa");
+    catalogue5->setParent_id_lsit(temp);
+    m_data_info->append_catalogue_by_sort(catalogue5);
+
+
+
      m_data_info->send_camera_get_finish_signal(m_data_info->get_id());
 }
 void http_worker::get_camera_tree()
