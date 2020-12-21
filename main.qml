@@ -1,15 +1,34 @@
 ﻿import QtQuick 2.12
 import QtQuick.Window 2.12
-
-import QtQuick.Controls 2.5 as QC2_5
+import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
 
-
-Window {
+ApplicationWindow {
     visible: true
-    width: 330
-    height: 560
+    width : (Qt.platform.os === "android") ? Screen.width : 360
+    height : (Qt.platform.os === "android") ? Screen.height : 640
     title: qsTr("水利监控")
+    //除以得到系数
+    id:root
+    property real multiplierH : root.height / 640;
+    property real multiplierW : root.width / 360;
+    //计算高的函数
+    function dpH(numbers)
+    {
+        return numbers * multiplierH;
+    }
+    //计算宽的函数
+    function dpW(numbers)
+    {
+
+        return numbers * multiplierW;
+    }
+    //平均值函数
+    function dpX(numbers)
+    {
+        return (dpW(numbers) + dpH(numbers)) / 2;
+    }
+
     ListModel{
        id:itemModel
        ListElement{
@@ -26,8 +45,12 @@ Window {
        }
 
     }
-
-    QC2_5.SwipeView {
+    LoginPage{
+       id:loginPage
+       anchors.fill: parent
+       z:2
+    }
+    SwipeView {
          id: view
 
          currentIndex: 0
