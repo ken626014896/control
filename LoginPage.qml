@@ -25,6 +25,7 @@ Rectangle {
             z: 1
             width: dpW(parent.width)
             height: dpH(30)
+            font.pixelSize: dpH(15)
             placeholderText: "ip"
             style:TextFieldStyle{
 
@@ -41,6 +42,7 @@ Rectangle {
             z: 1
             width: dpW(parent.width)
             height: dpH(30)
+            font.pixelSize: dpH(15)
             placeholderText: "用户名"
             style:TextFieldStyle{
 
@@ -59,6 +61,7 @@ Rectangle {
             width: dpW(parent.width)
             height: dpH(30)
             echoMode: 2
+            font.pixelSize: dpH(15)
             placeholderText: "密码"
             style:TextFieldStyle{
                 background: Rectangle {

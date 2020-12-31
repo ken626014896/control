@@ -42,6 +42,14 @@ unix:!macx {
 LIBS += -L$$PWD/linuxlib/ -lavfilter -lavformat -lavdevice -lavcodec -lswscale -lavutil -lswresample -lavdevice -lpthread -lm -lz -lrt -ldl
 }}
 
+
+macx { #指定macos平台
+#INCLUDEPATH += $$PWD/maclib/include
+
+INCLUDEPATH += "/usr/local/include"
+LIBS += -L/usr/local/Cellar/ffmpeg/4.2.2_3/lib -lavfilter -lavformat -lavdevice -lavcodec -lswscale -lavutil -lswresample -lavresample -lavdevice
+
+}
 #android系统
 android {
 INCLUDEPATH += $$PWD/androidlib/include
