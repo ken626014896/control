@@ -94,6 +94,21 @@ Rectangle {
                 color: "white"
                 text: "登 录"
             }
+            MouseArea{
+              anchors.fill: parent
+
+              onPressed: {
+                 parent.scale=0.98
+              }
+              onReleased: {
+                 parent.scale=1
+
+                  if(ip_TF.text!=""&&username_TF.text!=""&&password_TF.text!=""){
+
+                   }
+
+              }
+            }
 
 
         }
